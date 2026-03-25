@@ -8,11 +8,12 @@ const client = new Client({
 client.commands = new Collection();
 
 // comandos
-const commandFiles = fs.readdirSync('./commands').filter(f => f.endsWith('.js'));
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    client.commands.set(command.data.name, command);
+if (!command.data || !command.data.name) {
+    console.log(`❌ Comando inválido: ${file}`);
+    continue;
 }
+
+client.commands.set(command.data.name, command);
 
 // eventos
 const eventFiles = fs.readdirSync('./events').filter(f => f.endsWith('.js'));
